@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game4U - Top Games Downloads</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1f4037);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #ff4500;
+  }
+  p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  .game-card {
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+  }
+  .game-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+  }
+  .game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255,255,255,0.7), 0 0 20px rgba(255,255,255,0.5);
+  }
+  .game-card:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.3s;
+    margin: 5px;
+    color: #fff;
+  }
+  .download-btn img {
+    width: 20px;
+    height: 20px;
+  }
+  .download-btn:hover { transform: scale(1.05); }
+
+  /* ألوان لكل لعبة */
+  .gta-v { background: #1a1a1a; }
+  .roblox { background: #e2231a; }
+  .basebal9 { background: #004d99; }
+  .gta-sa { background: #333333; }
+  .gta-vc { background: #990000; }
+  .fifa-2026 { background: #006400; }
+  .fifa-2025 { background: #004080; }
+  .cod { background: #000000; }
+  .minecraft { background: #0b6623; }
+  .fortnite { background: #1e90ff; }
+  .amongus { background: #ff4500; }
+  .apex { background: #ff9900; }
+
+  /* ألوان أزرار حسب النوع */
+  .ios { background: #5555ff; }
+  .android { background: #33cc33; }
+</style>
+</head>
+<body>
+<h1>Game4U</h1>
+<p>Download the top games now and enjoy the ultimate gaming experience!</p>
+<div class="grid">
+
+<!-- GTA V -->
+<div class="game-card gta-v">
+  <img src="gta-v.jpg" alt="GTA V">
+  <h3>GTA V</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- Roblox -->
+<div class="game-card roblox">
+  <img src="roblox.jpg" alt="Roblox">
+  <h3>Roblox</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- Basebal9 -->
+<div class="game-card basebal9">
+  <img src="basebal9.jpg" alt="Basebal9">
+  <h3>Basebal9</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- GTA San Andreas -->
+<div class="game-card gta-sa">
+  <img src="gta-sa.jpg" alt="GTA San Andreas">
+  <h3>GTA San Andreas</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+  <!-- GTA Vice City -->
+<div class="game-card gta-vc">
+  <img src="gta-vc.jpg" alt="GTA Vice City">
+  <h3>GTA Vice City</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- FIFA 2026 -->
+<div class="game-card fifa-2026">
+  <img src="fifa-2026.jpg" alt="FIFA 2026">
+  <h3>FIFA 2026</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- FIFA 2025 -->
+<div class="game-card fifa-2025">
+  <img src="fifa-2025.jpg" alt="FIFA 2025">
+  <h3>FIFA 2025</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- Call of Duty -->
+<div class="game-card cod">
+  <img src="cod.jpg" alt="Call of Duty">
+  <h3>Call of Duty</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- Minecraft -->
+<div class="game-card minecraft">
+  <img src="minecraft.jpg" alt="Minecraft">
+  <h3>Minecraft</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- Fortnite -->
+<div class="game-card fortnite">
+  <img src="fortnite.jpg" alt="Fortnite">
+  <h3>Fortnite</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- Among Us -->
+<div class="game-card amongus">
+  <img src="amongus.jpg" alt="Among Us">
+  <h3>Among Us</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+<!-- Apex Legends -->
+<div class="game-card apex">
+  <img src="apex.jpg" alt="Apex Legends">
+  <h3>Apex Legends</h3>
+  <a href="#" class="download-btn ios"><img src="ios-icon.png" alt="iOS"> iOS</a>
+  <a href="#" class="download-btn android"><img src="android-icon.png" alt="Android"> Android</a>
+</div>
+
+</div>
+</body>
+</html>
