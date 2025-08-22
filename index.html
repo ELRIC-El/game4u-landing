@@ -4,97 +4,120 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game4U Mods</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    *{margin:0;padding:0;box-sizing:border-box;}
     body{
-      background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-      color:#fff;
+      font-family:'Inter',sans-serif;
+      background:linear-gradient(135deg,#0f172a,#1e293b);
+      color:#f1f5f9;
+      overflow-x:hidden;
     }
     header{
       text-align:center;
-      padding:25px;
-      font-size:32px;
+      padding:20px;
+      font-size:24px;
       font-weight:700;
-      background:rgba(0,0,0,0.35);
-      backdrop-filter: blur(8px);
+      background:#0f172a;
+      color:#38bdf8;
+      box-shadow:0 2px 12px rgba(0,0,0,.6);
       position:sticky;
       top:0;
-      z-index:100;
+      z-index:99;
+      animation: slideDown 1s ease forwards;
     }
     .hero{
       text-align:center;
       padding:40px 20px 20px;
-      animation: fadeIn 1.5s ease;
+      max-width:650px;
+      margin:auto;
+      animation: fadeIn 1.2s ease;
     }
-    .hero h1{font-size:34px;margin-bottom:15px;}
-    .hero p{font-size:16px;opacity:.8;}
+    .hero h1{font-size:30px;font-weight:700;color:#38bdf8;margin-bottom:10px;}
+    .hero p{font-size:15px;opacity:.8;}
 
+    /* GRID */
     .games-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:25px;
-      padding:30px;
-      max-width:1200px;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+      padding:25px 15px 60px;
+      max-width:900px;
       margin:auto;
     }
+
+    /* CARD */
     .game-card{
-      background:#111;
-      border-radius:18px;
+      background:#1e293b;
+      border-radius:16px;
       overflow:hidden;
-      padding:15px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
       text-align:center;
-      transition:transform .3s ease, box-shadow .3s ease;
+      box-shadow:0 6px 18px rgba(0,0,0,.4);
+      transform:scale(.95) translateY(20px);
+      opacity:0;
+      animation: fadeUp .8s forwards;
+      animation-delay:calc(var(--i)*.2s);
+      transition:.3s ease;
     }
-    .game-card:hover{
-      transform:translateY(-8px);
-      box-shadow:0 8px 18px rgba(0,0,0,0.4);
-    }
+    .game-card:hover{transform:translateY(-8px) scale(1.02);}
     .game-card img{
       width:100%;
-      height:200px;
+      height:180px;
       object-fit:cover;
-      border-radius:12px;
-      margin-bottom:12px;
+      display:block;
+      transition:.4s ease;
     }
-    .game-card h3{margin:10px 0;font-size:18px;}
-    .game-card p{font-size:14px;opacity:.8;margin-bottom:8px;}
-    .rating{margin:6px 0;}
+    .game-card:hover img{transform:scale(1.05);}
+    .game-card h3{font-size:15px;font-weight:600;margin:6px 0;color:#fff;}
+    .game-card p{font-size:12px;opacity:.7;min-height:28px;margin:0 6px 8px;}
+
+    /* RATING */
+    .rating{display:flex;justify-content:center;gap:1px;margin-bottom:6px;}
+    .rating svg{width:13px;height:13px;fill:#facc15;}
+
+    /* BUTTON */
     .download-btn{
-      background:#ff4b2b;
-      padding:10px 22px;
-      border:none;
-      border-radius:30px;
+      background:linear-gradient(135deg,#3b82f6,#06b6d4);
+      padding:7px 14px;
+      border-radius:18px;
       color:#fff;
       font-weight:600;
-      font-size:14px;
-      cursor:pointer;
+      font-size:12px;
       text-decoration:none;
-      transition:all .3s ease;
-      display:inline-block;
-      margin-top:auto;
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      margin-bottom:12px;
+      transition:.25s ease;
+      box-shadow:0 3px 8px rgba(6,182,212,0.3);
     }
+    .download-btn svg{width:13px;height:13px;fill:white;}
     .download-btn:hover{
-      background:#ff1e00;
-      transform:scale(1.07) translateY(-3px);
-      box-shadow:0 8px 18px rgba(255,75,43,0.4);
+      transform:scale(1.08) translateY(-3px);
+      box-shadow:0 6px 15px rgba(6,182,212,0.5);
     }
+
     footer{
       text-align:center;
-      padding:20px;
-      background:rgba(0,0,0,0.35);
-      margin-top:40px;
+      padding:18px;
+      font-size:13px;
+      background:#0f172a;
+      margin-top:20px;
+      opacity:.75;
+      animation: fadeIn 1.5s ease;
     }
+
+    /* ANIMATIONS */
     @keyframes fadeIn{
-      from{opacity:0;transform:translateY(40px);}
+      from{opacity:0;transform:translateY(30px);}
       to{opacity:1;transform:translateY(0);}
     }
-    @media(max-width:600px){
-      .games-grid{grid-template-columns:repeat(2,1fr);gap:15px;}
-      header{font-size:26px;}
-      .hero h1{font-size:24px;}
+    @keyframes fadeUp{
+      to{opacity:1;transform:scale(1) translateY(0);}
+    }
+    @keyframes slideDown{
+      from{transform:translateY(-100%);}
+      to{transform:translateY(0);}
     }
   </style>
 </head>
@@ -102,54 +125,44 @@
   <header>Game4U Mods</header>
 
   <section class="hero">
-    <h1>Top 30 Mobile Games MODs</h1>
-    <p>Download the best MOD APKs for Android & iOS</p>
+    <h1>Premium MOD Games</h1>
+    <p>Hand-picked collection of the most popular modded games. Sleek design, smooth animations, and 🔥 vibes!</p>
   </section>
 
   <section class="games-grid">
-    <!-- Example Game Card -->
-    <div class="game-card">
-      <span class="tag">🔥 Hot</span>
+    <!-- Card 1 -->
+    <div class="game-card" style="--i:1">
       <img src="https://i.pinimg.com/474x/06/21/9f/06219f680deea246d8dc88a2b8f2c3ab.jpg" alt="GTA V Mobile">
       <h3>GTA V Mobile</h3>
-      <p>Play GTA V on your phone – MOD APK unlocked with cheats!</p>
-      <div class="rating">⭐⭐⭐⭐⭐</div>
-      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
+      <p>Play GTA V on your phone – unlocked with cheats!</p>
+      <div class="rating">
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+      </div>
+      <a href="YOUR_CPA_LINK" class="download-btn">
+        <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7 7-7z"/></svg>
+        Download
+      </a>
     </div>
 
-    <div class="game-card">
-      <img src="https://play-lh.googleusercontent.com/0YnMmjYu8_51CI8daxyWPqhij4EGTvHlWEKS8lOxaF1RP-9btf_A8okIsE92O-lCpCU=w240-h480-rw">
+    <!-- Card 2 -->
+    <div class="game-card" style="--i:2">
+      <img src="https://play-lh.googleusercontent.com/0YnMmjYu8_51CI8daxyWPqhij4EGTvHlWEKS8lOxaF1RP-9btf_A8okIsE92O-lCpCU=w240-h480-rw" alt="PUBG MOD">
       <h3>PUBG MOD</h3>
       <p>Unlimited UC + ESP Aimbot.</p>
-      <div class="rating">⭐⭐⭐⭐⭐</div>
-      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
+      <div class="rating">
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.3z"/></svg>
+      </div>
+      <a href="YOUR_CPA_LINK" class="download-btn">
+        <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7 7-7z"/></svg>
+        Download
+      </a>
     </div>
-
-    <div class="game-card">
-      <img src="https://play-lh.googleusercontent.com/27O5tpaYE82W6m30rJ_MX3-UvshlDM6O8oXDxb6GseYW2T7P8UNT19727MGmz-0q3w">
-      <h3>Minecraft MOD</h3>
-      <p>All skins unlocked.</p>
-      <div class="rating">⭐⭐⭐⭐</div>
-      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
-    </div>
-    <div class="game-card">
-      <img src="https://play-lh.googleusercontent.com/jHnf_3-yMox_Tub_oLKQ7OuOi8Iahf1f4rdu-etZ2hmzUOekY84znct-c8hksxhD15PYNk4dMH2ZdVY3uxm7Gw">
-      <h3>Free Fire Hack</h3>
-      <p>Wallhack + Diamonds.</p>
-      <div class="rating">⭐⭐⭐⭐⭐</div>
-      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
-    </div>
-
-    <div class="game-card">
-      <img src="https://m.media-amazon.com/images/M/MV5BMTZlMmIxM2EtN2Y4Zi00M2ZhLTk3NzgtNjJmZTU0MTQ3YjcwXkEyXkFqcGc@._V1_.jpg">
-      <h3>Fortnite MOD</h3>
-      <p>Unlimited V-Bucks + Skins.</p>
-      <div class="rating">⭐⭐⭐⭐</div>
-      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
-    </div>
-
-    <!-- باقي الألعاب كمل بنفس الشكل -->
-    
   </section>
 
   <footer>
