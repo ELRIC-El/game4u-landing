@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameHub</title>
+  <title>Game4U Mods</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
     body{
@@ -29,77 +29,84 @@
     .hero h1{font-size:34px;margin-bottom:15px;}
     .hero p{font-size:16px;opacity:.8;}
 
-    .grid{
+    .games-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
       gap:25px;
       padding:30px;
       max-width:1200px;
       margin:auto;
     }
-    .card{
-      position:relative;
+    .game-card{
+      background:#111;
       border-radius:18px;
       overflow:hidden;
-      background:#111;
-      transition:all .8s ease;
-      transform:translateY(0);
-      opacity:1;
-    }
-    .card img{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      display:block;
-      transition:transform .5s ease;
-    }
-    .card:hover img{transform:scale(1.1);}
-    .overlay{
-      position:absolute;
-      bottom:0;
-      left:0;
-      right:0;
-      height:100%;
-      background:linear-gradient(to top,rgba(0,0,0,0.6),transparent);
+      padding:15px;
       display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      padding:20px;
-      opacity:0;
-      transition:.4s;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      transition:transform .3s ease, box-shadow .3s ease;
     }
-    .card:hover .overlay{opacity:1;}
-    .download{
+    .game-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 8px 18px rgba(0,0,0,0.4);
+    }
+    .game-card img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:12px;
+    }
+    .game-card h3{margin:10px 0;font-size:18px;}
+    .game-card p{font-size:14px;opacity:.8;margin-bottom:8px;}
+    .rating{margin:6px 0;}
+    .download-btn{
       background:#ff4b2b;
-      padding:12px 28px;
+      padding:10px 22px;
       border:none;
       border-radius:30px;
       color:#fff;
       font-weight:600;
-      font-size:15px;
+      font-size:14px;
       cursor:pointer;
       text-decoration:none;
       transition:all .3s ease;
+      display:inline-block;
+      margin-top:auto;
     }
-    .download:hover{
+    .download-btn:hover{
       background:#ff1e00;
       transform:scale(1.07) translateY(-3px);
       box-shadow:0 8px 18px rgba(255,75,43,0.4);
+    }
+    footer{
+      text-align:center;
+      padding:20px;
+      background:rgba(0,0,0,0.35);
+      margin-top:40px;
     }
     @keyframes fadeIn{
       from{opacity:0;transform:translateY(40px);}
       to{opacity:1;transform:translateY(0);}
     }
     @media(max-width:600px){
-      .grid{grid-template-columns:repeat(2,1fr);gap:15px;}
+      .games-grid{grid-template-columns:repeat(2,1fr);gap:15px;}
       header{font-size:26px;}
       .hero h1{font-size:24px;}
     }
   </style>
 </head>
 <body>
-  <header>GameHub</header>
- <section class="games-grid">
+  <header>Game4U Mods</header>
+
+  <section class="hero">
+    <h1>Top 30 Mobile Games MODs</h1>
+    <p>Download the best MOD APKs for Android & iOS</p>
+  </section>
+
+  <section class="games-grid">
     <!-- Example Game Card -->
     <div class="game-card">
       <span class="tag">🔥 Hot</span>
@@ -110,32 +117,43 @@
       <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
     </div>
 
-    <!-- Repeat for ~30 games -->
-    <div class="game-card"><img src="https://play-lh.googleusercontent.com/0YnMmjYu8_51CI8daxyWPqhij4EGTvHlWEKS8lOxaF1RP-9btf_A8okIsE92O-lCpCU=w240-h480-rw"><h3>PUBG MOD</h3><p>Unlimited UC + ESP Aimbot.</p><div class="rating">⭐⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://play-lh.googleusercontent.com/27O5tpaYE82W6m30rJ_MX3-UvshlDM6O8oXDxb6GseYW2T7P8UNT19727MGmz-0q3w"><h3>Minecraft MOD</h3><p>All skins unlocked.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://play-lh.googleusercontent.com/jHnf_3-yMox_Tub_oLKQ7OuOi8Iahf1f4rdu-etZ2hmzUOekY84znct-c8hksxhD15PYNk4dMH2ZdVY3uxm7Gw"><h3>Free Fire Hack</h3><p>Wallhack + Diamonds.</p><div class="rating">⭐⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://m.media-amazon.com/images/M/MV5BMTZlMmIxM2EtN2Y4Zi00M2ZhLTk3NzgtNjJmZTU0MTQ3YjcwXkEyXkFqcGc@._V1_.jpg"><h3>Fortnite MOD</h3><p>Unlimited V-Bucks + Skins.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6bLdvmPT61m3iBTbHbSEBElVARRxtUECwBA&s"><h3>COD Mobile MOD</h3><p>Wallhack + CP.</p><div class="rating">⭐⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://play-lh.googleusercontent.com/x0gzuXNOIe_RISFYF9YeBI1h6Xxb7ZKFgyz0bl_nNd59turcpwrg4WOl2r_FNCzAwA"><h3>Subway Surfers MOD</h3><p>Unlimited coins.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFFD1p-XchJ46-mleQDkuHi3LlSRxSDtkDRIt-0flVzBBA1-Qw7BGR0ARKlpmE70Wqhbo&usqp=CAU"><h3>Clash of Clans Hack</h3><p>Unlimited Gems.</p><div class="rating">⭐⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
+    <div class="game-card">
+      <img src="https://play-lh.googleusercontent.com/0YnMmjYu8_51CI8daxyWPqhij4EGTvHlWEKS8lOxaF1RP-9btf_A8okIsE92O-lCpCU=w240-h480-rw">
+      <h3>PUBG MOD</h3>
+      <p>Unlimited UC + ESP Aimbot.</p>
+      <div class="rating">⭐⭐⭐⭐⭐</div>
+      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
+    </div>
+
+    <div class="game-card">
+      <img src="https://play-lh.googleusercontent.com/27O5tpaYE82W6m30rJ_MX3-UvshlDM6O8oXDxb6GseYW2T7P8UNT19727MGmz-0q3w">
+      <h3>Minecraft MOD</h3>
+      <p>All skins unlocked.</p>
+      <div class="rating">⭐⭐⭐⭐</div>
+      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
+    </div>
+    <div class="game-card">
+      <img src="https://play-lh.googleusercontent.com/jHnf_3-yMox_Tub_oLKQ7OuOi8Iahf1f4rdu-etZ2hmzUOekY84znct-c8hksxhD15PYNk4dMH2ZdVY3uxm7Gw">
+      <h3>Free Fire Hack</h3>
+      <p>Wallhack + Diamonds.</p>
+      <div class="rating">⭐⭐⭐⭐⭐</div>
+      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
+    </div>
+
+    <div class="game-card">
+      <img src="https://m.media-amazon.com/images/M/MV5BMTZlMmIxM2EtN2Y4Zi00M2ZhLTk3NzgtNjJmZTU0MTQ3YjcwXkEyXkFqcGc@._V1_.jpg">
+      <h3>Fortnite MOD</h3>
+      <p>Unlimited V-Bucks + Skins.</p>
+      <div class="rating">⭐⭐⭐⭐</div>
+      <a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a>
+    </div>
+
+    <!-- باقي الألعاب كمل بنفس الشكل -->
     
-    <!-- Add many more like above to reach ~30 -->
-    <div class="game-card"><img src="https://images.sftcdn.net/images/t_app-icon-m/p/1c072947-7552-49f0-8c02-1a393a0b4e4a/1159008467/among-us-logo"><h3>Among Us MOD</h3><p>All skins unlocked.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://sm.ign.com/ign_mear/cover/a/asphalt-9-/asphalt-9-legends_22gu.jpg"><h3>Asphalt 9 MOD</h3><p>Unlimited cars & money.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://assets-prd.ignimgs.com/2023/04/02/templerun2-1680461914458.jpg"><h3>Temple Run MOD</h3><p>Unlimited coins.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://i.pinimg.com/236x/5a/41/b0/5a41b043cda9046f80cd6daef9200415.jpg"><h3>Shadow Fight MOD</h3><p>Max level + coins.</p><div class="rating">⭐⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://play-lh.googleusercontent.com/AijtYd3ELvSg4ItDkO4NmG-F0PL5qE8AxgNqB-OflSakAiM9ulL5K9k0IOqB16TFJw"><h3>Angry Birds MOD</h3><p>Unlimited power-ups.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://styles.redditmedia.com/t5_2rnsh/styles/communityIcon_zh277xaatqt91.png"><h3>Roblox
-MOD</h3><p>Premium unlocked.</p><div class="rating">⭐⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://images.sftcdn.net/images/t_app-icon-m/p/f4d7618c-99eb-11e6-886f-00163ed833e7/2420067763/clash-royale-logo"><h3>Clash Royale MOD</h3><p>Unlimited cards.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    <div class="game-card"><img src="https://play-lh.googleusercontent.com/HRsBRWHE1nPfbWZLATrGnrWrcjfOwNBK0P8e6qY8TGxobq7B5q7p-XZxR2hun6cnphA=w240-h480-rw"><h3>Pokémon GO MOD</h3><p>Fake GPS unlocked.</p><div class="rating">⭐⭐⭐⭐</div><a href="YOUR_CPA_LINK" class="download-btn">⬇ Download</a></div>
-    
-    <!-- Continue adding to reach 30 -->
   </section>
 
   <footer>
     <p>© 2025 Game4U Mods | All Rights Reserved</p>
   </footer>
-
 </body>
 </html>
