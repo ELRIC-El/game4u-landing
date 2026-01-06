@@ -3,169 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Robux Generator</title>
+<title>Win Robux</title>
 
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
     margin:0;
-    font-family:'Segoe UI', Tahoma, sans-serif;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    font-family:'Inter','Segoe UI',sans-serif;
+    background:
+        radial-gradient(circle at 20% 15%,#1f3b4d55,transparent 45%),
+        radial-gradient(circle at 80% 85%,#243b5555,transparent 45%),
+        linear-gradient(135deg,#0b0f14,#101926);
     color:#fff;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
 }
 
+/* ===== CARD ===== */
 .container{
     width:100%;
     max-width:420px;
-    background:#121212;
-    border-radius:18px;
-    padding:25px;
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(22px);
+    border-radius:26px;
+    padding:26px;
     text-align:center;
-    box-shadow:0 0 30px rgba(0,0,0,0.7);
-    animation:fadeIn 1s ease;
+    box-shadow:0 35px 70px rgba(0,0,0,0.65);
+    animation:cardIn 1s ease;
 }
 
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(20px);}
+@keyframes cardIn{
+    from{opacity:0; transform:translateY(40px);}
     to{opacity:1; transform:translateY(0);}
 }
 
+/* ===== LOGO ===== */
 .logo{
-    width:120px;
-    margin-bottom:15px;
-    animation:float 3s ease-in-out infinite;
+    width:105px;
+    margin-bottom:10px;
+    animation:logoFloat 4s ease-in-out infinite;
 }
 
-@keyframes float{
+@keyframes logoFloat{
     0%,100%{transform:translateY(0);}
     50%{transform:translateY(-8px);}
 }
 
 h1{
     font-size:22px;
-    margin-bottom:8px;
+    margin:6px 0;
 }
 
 .subtitle{
     font-size:14px;
-    opacity:0.85;
+    opacity:.85;
 }
 
-.download{
+/* ===== PLATFORMS ===== */
+.platforms{
     display:flex;
-    gap:10px;
-    margin:20px 0;
+    justify-content:center;
+    gap:18px;
+    margin:18px 0;
 }
 
-.download a{
-    flex:1;
-    text-decoration:none;
-    background:#1e1e1e;
-    padding:12px;
-    border-radius:12px;
-    color:#fff;
+.platform{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(0,0,0,0.35);
+    padding:11px 18px;
+    border-radius:18px;
     font-size:14px;
-    transition:0.3s;
+    cursor:pointer;
+    transition:.3s;
 }
 
-.download a:hover{
-    background:#2a2a2a;
-    transform:scale(1.05);
+.platform img{width:18px;}
+
+.platform.active{
+    animation:platformGrow .6s ease;
+    background:rgba(255,255,255,0.18);
 }
 
+@keyframes platformGrow{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.12);}
+    100%{transform:scale(1);}
+}
+
+/* ===== FORM ===== */
 .try{
-    margin-top:10px;
+    margin-top:6px;
     font-size:16px;
     font-weight:600;
 }
 
-input{
+/* Robux Select – soft trust color */
+select{
     width:100%;
-    padding:13px;
-    margin-top:15px;
+    padding:14px;
+    margin-top:14px;
     border:none;
-    border-radius:10px;
+    border-radius:16px;
     font-size:15px;
     outline:none;
+    background:#eaf3ff;
+    color:#0b2a4a;
+    font-weight:600;
 }
 
+/* User ID */
+input{
+    width:100%;
+    padding:14px;
+    margin-top:14px;
+    border:none;
+    border-radius:16px;
+    font-size:15px;
+    outline:none;
+    background:#ffffff;
+}
+
+/* ===== VERIFY BUTTON ===== */
 button{
     width:100%;
-    margin-top:15px;
-    padding:14px;
+    margin-top:18px;
+    padding:16px;
     font-size:16px;
-    font-weight:bold;
-    background:#00c37a;
+    font-weight:700;
     border:none;
-    border-radius:12px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
     color:#fff;
     cursor:pointer;
-    animation:pulse 2s infinite;
+    animation:verifyPulse 2.6s infinite;
 }
 
-@keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(0,195,122,0.7);}
-    70%{box-shadow:0 0 0 15px rgba(0,195,122,0);}
-    100%{box-shadow:0 0 0 0 rgba(0,195,122,0);}
+@keyframes verifyPulse{
+    0%{box-shadow:0 0 0 0 rgba(59,130,246,.6);}
+    70%{box-shadow:0 0 0 22px rgba(59,130,246,0);}
+    100%{box-shadow:0 0 0 0 rgba(59,130,246,0);}
 }
 
 button:hover{
-    background:#00e18f;
+    transform:scale(1.04);
 }
 
-.note{
-    font-size:12px;
-    opacity:0.7;
+/* ===== TRUST TEXT ===== */
+.trust{
     margin-top:12px;
-    line-height:1.4;
+    font-size:12px;
+    opacity:.85;
+    line-height:1.6;
 }
+
+/* ===== CAPTCHA ===== */
+.captcha{
+    margin-top:14px;
+    padding:14px;
+    border-radius:16px;
+    background:rgba(0,0,0,0.45);
+    font-size:13px;
+}
+
+/* ===== LIVE ===== */
+.live{
+    margin-top:14px;
+    font-size:12px;
+    background:rgba(0,0,0,0.55);
+    padding:6px 14px;
+    border-radius:999px;
+    display:inline-block;
+}
+.live span{font-weight:600;}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+
     <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Roblox_Logo_2022.jpg">
 
     <h1>Download Roblox</h1>
     <div class="subtitle">Available on iOS & Android</div>
 
-    <div class="download">
-        <a href="https://apps.apple.com/app/roblox/id431946152" target="_blank">📱 iOS</a>
-        <a href="https://play.google.com/store/apps/details?id=com.roblox.client" target="_blank">🤖 Android</a>
+    <div class="platforms">
+        <div class="platform" onclick="platformClick(this,'ios')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
+            iOS
+        </div>
+        <div class="platform" onclick="platformClick(this,'android')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
+            Android
+        </div>
     </div>
 
     <div class="try">🎁 Try your luck and win Robux</div>
 
+    <select id="amount">
+        <option value="">Select Robux Amount</option>
+        <option>400 Robux</option>
+        <option>800 Robux</option>
+        <option>1700 Robux</option>
+        <option>4500 Robux</option>
+    </select>
+
     <input type="text" id="userid" placeholder="Enter your Roblox User ID">
 
-    <button onclick="goLocker()">Confirm</button>
+    <button onclick="goLocker()">Verify & Continue</button>
 
-    <div class="note">
-        🔒 No password required<br>
-        ✔️ Safe & secure process
+    <div class="trust">
+        🔒 Safe process • No password required<br>
+        ✅ No login • Your account stays secure
     </div>
+
+    <div class="captcha">
+        🛡️ Human verification required – complete one quick task.
+    </div>
+
+    <div class="live" id="liveBox">
+        🔴 <span>Emma</span> won <span>800 Robux</span>
+    </div>
+
 </div>
 
 <script>
-function goLocker(){
-    var id = document.getElementById("userid").value.trim();
+let platformState={};
 
-    if(id === ""){
-        alert("Please enter your Roblox User ID");
+function platformClick(el,type){
+    if(!platformState[type]){
+        platformState[type]=true;
+        el.classList.add("active");
+
+        setTimeout(()=>{
+            el.classList.remove("active");
+            platformState[type]=false;
+        },2000);
+    }else{
+        if(type==="ios"){
+            window.open("https://apps.apple.com/app/roblox/id431946152","_blank");
+        }else{
+            window.open("https://play.google.com/store/apps/details?id=com.roblox.client","_blank");
+        }
+    }
+}
+
+function goLocker(){
+    const id=document.getElementById("userid").value.trim();
+    const amount=document.getElementById("amount").value;
+    if(!id||!amount){
+        alert("Please select Robux amount and enter your User ID");
         return;
     }
-
     // 🔴 PUT YOUR OGADS CONTENT LOCKER LINK HERE
-    window.location.href = "PUT_OGADS_CONTENT_LOCKER_LINK_HERE";
+    window.location.href="PUT_OGADS_CONTENT_LOCKER_LINK_HERE";
 }
+
+/* Fake Live */
+const names=["Alex","Emma","Noah","Lucas","Leo","Sarah","Daniel","Mia"];
+const robux=["400","800","1700","4500"];
+setInterval(()=>{
+    const n=names[Math.floor(Math.random()*names.length)];
+    const r=robux[Math.floor(Math.random()*robux.length)];
+    document.getElementById("liveBox").innerHTML=
+        `🔴 <span>${n}</span> won <span>${r} Robux</span>`;
+},5000);
 </script>
 
 </body>
