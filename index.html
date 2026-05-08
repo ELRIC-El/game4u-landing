@@ -3,277 +3,706 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Win Robux</title>
-
+<title>Game4U</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --r:#ff2d55;--b:#00c8ff;--g:#39ff14;--p:#bf5fff;
+  --bg:#080810;--card:#0e0e1a;--border:rgba(255,255,255,0.07);
+}
+body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden;}
 
-body{
-    margin:0;
-    font-family:'Inter','Segoe UI',sans-serif;
-    background:
-        radial-gradient(circle at 20% 15%,#1f3b4d55,transparent 45%),
-        radial-gradient(circle at 80% 85%,#243b5555,transparent 45%),
-        linear-gradient(135deg,#0b0f14,#101926);
-    color:#fff;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+/* ═══ ANIMATED BG ═══ */
+canvas#bg{position:fixed;inset:0;z-index:-2;}
+
+.glow-orbs{position:fixed;inset:0;z-index:-1;pointer-events:none;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:drift 12s ease-in-out infinite;}
+.orb1{width:400px;height:400px;background:rgba(255,45,85,0.12);top:-100px;left:-100px;animation-delay:0s;}
+.orb2{width:350px;height:350px;background:rgba(0,200,255,0.1);bottom:-80px;right:-80px;animation-delay:-4s;}
+.orb3{width:300px;height:300px;background:rgba(191,95,255,0.09);top:40%;left:50%;animation-delay:-8s;}
+
+@keyframes drift{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(30px,-30px) scale(1.05);}
+  66%{transform:translate(-20px,20px) scale(0.95);}
 }
 
-/* ===== CARD ===== */
-.container{
-    width:100%;
-    max-width:420px;
-    background:rgba(255,255,255,0.07);
-    backdrop-filter:blur(22px);
-    border-radius:26px;
-    padding:26px;
-    text-align:center;
-    box-shadow:0 35px 70px rgba(0,0,0,0.65);
-    animation:cardIn 1s ease;
+/* grid lines */
+.gridlines{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,200,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,200,255,0.03) 1px,transparent 1px);
+  background-size:44px 44px;
 }
 
-@keyframes cardIn{
-    from{opacity:0; transform:translateY(40px);}
-    to{opacity:1; transform:translateY(0);}
+/* ═══ NAV ═══ */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;
+  background:rgba(8,8,16,0.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;
 }
-
-/* ===== LOGO ===== */
 .logo{
-    width:105px;
-    margin-bottom:10px;
-    animation:logoFloat 4s ease-in-out infinite;
+  font-size:22px;font-weight:900;letter-spacing:-0.5px;
+  background:linear-gradient(90deg,var(--r),var(--b));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:none;filter:drop-shadow(0 0 12px rgba(255,45,85,0.5));
+}
+.nav-r{display:flex;align-items:center;gap:10px;}
+.search-btn{
+  width:34px;height:34px;border-radius:9px;background:#111;
+  border:1px solid var(--border);color:#666;font-size:14px;
+  cursor:pointer;display:grid;place-items:center;transition:.2s;
+}
+.search-btn:hover{border-color:var(--b);color:var(--b);box-shadow:0 0 10px rgba(0,200,255,0.25);}
+
+/* ═══ HERO ═══ */
+.hero{
+  text-align:center;padding:50px 20px 30px;position:relative;
+}
+.hero h1{
+  font-size:clamp(36px,10vw,72px);font-weight:900;
+  line-height:.95;letter-spacing:-2px;margin-bottom:12px;
+}
+.hero h1 .neon-r{
+  background:linear-gradient(135deg,#ff2d55,#ff9500);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 20px rgba(255,45,85,0.6));
+}
+.hero h1 .neon-b{
+  background:linear-gradient(135deg,#00c8ff,#bf5fff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 20px rgba(0,200,255,0.6));
+}
+.hero p{font-size:13px;color:#444;letter-spacing:1px;text-transform:uppercase;}
+
+/* ═══ SEARCH ═══ */
+.search-wrap{
+  padding:0 16px 16px;display:none;
+}
+.search-wrap.show{display:block;}
+.search-wrap input{
+  width:100%;padding:12px 16px;
+  background:#111;border:1px solid #222;border-radius:10px;
+  color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none;
+  transition:.2s;
+}
+.search-wrap input:focus{border-color:var(--b);box-shadow:0 0 0 2px rgba(0,200,255,0.1);}
+.search-wrap input::placeholder{color:#333;}
+
+/* ═══ FILTERS ═══ */
+.filters{
+  display:flex;gap:6px;padding:0 16px 18px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{display:none;}
+.f{
+  padding:6px 15px;border-radius:7px;border:1px solid #1e1e1e;
+  background:transparent;color:#444;
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;
+  cursor:pointer;white-space:nowrap;transition:.2s;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.f:hover{color:#fff;border-color:#333;}
+.f.on{
+  background:var(--r);border-color:var(--r);color:#fff;
+  box-shadow:0 0 16px rgba(255,45,85,0.4);
 }
 
-@keyframes logoFloat{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-8px);}
+/* ═══ SECTION LABEL ═══ */
+.sec{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px 12px;
+}
+.sec h2{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#2a2a2a;}
+.sec span{font-size:10px;color:#222;background:#111;
+  border:1px solid #1a1a1a;padding:2px 9px;border-radius:20px;}
+
+/* ═══ GRID ═══ */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;background:#111;
+  border-top:1px solid #111;
 }
 
-h1{
-    font-size:22px;
-    margin:6px 0;
+/* ═══ CARD ═══ */
+.card{
+  background:var(--bg);cursor:pointer;
+  transition:background .15s;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.card:hover{background:#0d0d18;}
+.card:active{background:#121220;}
+
+/* neon border flash on hover */
+.card::before{
+  content:'';position:absolute;inset:0;
+  border:1px solid transparent;
+  transition:.3s;pointer-events:none;z-index:1;
+}
+.card:hover::before{border-color:rgba(0,200,255,0.2);}
+
+.card-img{
+  width:100%;aspect-ratio:1/1;object-fit:cover;
+  display:block;transition:transform .3s;
+}
+.card:hover .card-img{transform:scale(1.05);}
+
+.img-wrap{overflow:hidden;position:relative;}
+
+/* neon genre tag on image */
+.genre-tag{
+  position:absolute;bottom:5px;left:5px;z-index:2;
+  font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  padding:2px 6px;border-radius:4px;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,0.1);color:#aaa;
 }
 
-.subtitle{
-    font-size:14px;
-    opacity:.85;
+.card-body{padding:8px 8px 10px;flex:1;}
+.card-body h3{
+  font-size:11px;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-bottom:2px;
+}
+.card-body .sub{font-size:9px;color:#333;margin-bottom:6px;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;}
+.star{font-size:9px;color:#f59e0b;}
+.get-pill{
+  font-size:8px;font-weight:700;text-transform:uppercase;
+  background:rgba(255,45,85,0.12);
+  border:1px solid rgba(255,45,85,0.3);
+  color:var(--r);padding:2px 8px;border-radius:20px;
+  transition:.2s;
+}
+.card:hover .get-pill{
+  background:var(--r);color:#fff;
+  box-shadow:0 0 10px rgba(255,45,85,0.4);
 }
 
-/* ===== PLATFORMS ===== */
-.platforms{
-    display:flex;
-    justify-content:center;
-    gap:18px;
-    margin:18px 0;
+/* ═══ EMPTY ═══ */
+.empty{
+  text-align:center;padding:60px;color:#222;
+  grid-column:1/-1;font-size:13px;
 }
 
-.platform{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    background:rgba(0,0,0,0.35);
-    padding:11px 18px;
-    border-radius:18px;
-    font-size:14px;
-    cursor:pointer;
-    transition:.3s;
+/* ═══ OVERLAY / SHEET ═══ */
+.ov{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(12px);
+  z-index:200;display:flex;
+  align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.ov.open{opacity:1;pointer-events:all;}
+
+.sheet{
+  background:#0e0e18;
+  width:100%;max-width:480px;
+  border-radius:22px 22px 0 0;
+  border:1px solid #1a1a2a;border-bottom:none;
+  transform:translateY(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  max-height:90vh;overflow-y:auto;scrollbar-width:none;
+}
+.sheet::-webkit-scrollbar{display:none;}
+.ov.open .sheet{transform:translateY(0);}
+
+.handle{width:32px;height:3px;background:#1e1e2e;border-radius:2px;margin:12px auto;}
+
+.sh-hero{width:100%;height:170px;object-fit:cover;display:block;}
+
+/* neon line under hero */
+.neon-line{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--r),var(--b),var(--p),transparent);
+  opacity:.6;
 }
 
-.platform img{width:18px;}
+.sh-body{padding:18px;}
 
-.platform.active{
-    animation:platformGrow .6s ease;
-    background:rgba(255,255,255,0.18);
+.sh-top{display:flex;gap:12px;align-items:center;margin-bottom:14px;}
+.sh-ico{
+  width:58px;height:58px;border-radius:13px;object-fit:cover;flex-shrink:0;
+  box-shadow:0 0 20px rgba(255,45,85,0.2);
+}
+.sh-info h2{font-size:18px;font-weight:800;margin-bottom:3px;}
+.sh-meta{display:flex;gap:6px;flex-wrap:wrap;}
+.meta{
+  font-size:10px;color:#444;background:#111;
+  border:1px solid #1a1a1a;padding:2px 8px;border-radius:20px;
+}
+.meta.r{color:#f59e0b;}
+
+.sh-desc{font-size:12px;color:#555;line-height:1.7;margin-bottom:16px;}
+
+.feat-title{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#222;margin-bottom:8px;}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:20px;}
+.feat{
+  background:#111;border:1px solid #1a1a1a;border-radius:8px;
+  padding:7px 10px;font-size:10px;color:#555;
+  display:flex;align-items:center;gap:5px;
+}
+.feat::before{
+  content:'';width:4px;height:4px;border-radius:50%;
+  background:var(--r);flex-shrink:0;
+  box-shadow:0 0 6px var(--r);
 }
 
-@keyframes platformGrow{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.12);}
-    100%{transform:scale(1);}
+/* DL BTN */
+.dl-btn{
+  width:100%;padding:14px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--r),#ff6b00);
+  color:#fff;font-family:'Inter',sans-serif;
+  font-size:15px;font-weight:800;cursor:pointer;
+  letter-spacing:.5px;margin-bottom:8px;
+  box-shadow:0 4px 24px rgba(255,45,85,0.35);
+  transition:.25s;position:relative;overflow:hidden;
 }
+.dl-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+  transform:translateX(-100%);transition:.6s;
+}
+.dl-btn:hover::after{transform:translateX(100%);}
+.dl-btn:hover{box-shadow:0 6px 32px rgba(255,45,85,0.5);}
 
-/* ===== FORM ===== */
-.try{
-    margin-top:6px;
-    font-size:16px;
-    font-weight:600;
+.cl-btn{
+  width:100%;padding:11px;border:1px solid #1a1a1a;border-radius:12px;
+  background:transparent;color:#333;font-family:'Inter',sans-serif;
+  font-size:13px;cursor:pointer;transition:.2s;
 }
+.cl-btn:hover{color:#fff;border-color:#333;}
 
-/* Robux Select – soft trust color */
-select{
-    width:100%;
-    padding:14px;
-    margin-top:14px;
-    border:none;
-    border-radius:16px;
-    font-size:15px;
-    outline:none;
-    background:#eaf3ff;
-    color:#0b2a4a;
-    font-weight:600;
-}
-
-/* User ID */
-input{
-    width:100%;
-    padding:14px;
-    margin-top:14px;
-    border:none;
-    border-radius:16px;
-    font-size:15px;
-    outline:none;
-    background:#ffffff;
-}
-
-/* ===== VERIFY BUTTON ===== */
-button{
-    width:100%;
-    margin-top:18px;
-    padding:16px;
-    font-size:16px;
-    font-weight:700;
-    border:none;
-    border-radius:18px;
-    background:linear-gradient(135deg,#3b82f6,#2563eb);
-    color:#fff;
-    cursor:pointer;
-    animation:verifyPulse 2.6s infinite;
-}
-
-@keyframes verifyPulse{
-    0%{box-shadow:0 0 0 0 rgba(59,130,246,.6);}
-    70%{box-shadow:0 0 0 22px rgba(59,130,246,0);}
-    100%{box-shadow:0 0 0 0 rgba(59,130,246,0);}
-}
-
-button:hover{
-    transform:scale(1.04);
-}
-
-/* ===== TRUST TEXT ===== */
-.trust{
-    margin-top:12px;
-    font-size:12px;
-    opacity:.85;
-    line-height:1.6;
-}
-
-/* ===== CAPTCHA ===== */
-.captcha{
-    margin-top:14px;
-    padding:14px;
-    border-radius:16px;
-    background:rgba(0,0,0,0.45);
-    font-size:13px;
-}
-
-/* ===== LIVE ===== */
-.live{
-    margin-top:14px;
-    font-size:12px;
-    background:rgba(0,0,0,0.55);
-    padding:6px 14px;
-    border-radius:999px;
-    display:inline-block;
-}
-.live span{font-weight:600;}
+/* pb */
+.pb{padding-bottom:40px;}
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<canvas id="bg"></canvas>
+<div class="glow-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+<div class="gridlines"></div>
 
-    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Roblox_Logo_2022.jpg">
+<!-- NAV -->
+<nav>
+  <div class="logo">Game4U</div>
+  <div class="nav-r">
+    <button class="search-btn" onclick="toggleSearch()">⌕</button>
+  </div>
+</nav>
 
-    <h1>Download Roblox</h1>
-    <div class="subtitle"></div>
+<!-- SEARCH -->
+<div class="search-wrap" id="sw">
+  <input type="text" id="q" placeholder="Search games…" oninput="render()">
+</div>
 
-    <div class="platforms">
-        <div class="platform" onclick="platformClick(this,'ios')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg">
-            iOS
+<!-- HERO -->
+<div class="hero">
+  <h1><span class="neon-r">Play</span><br><span class="neon-b">Anything.</span></h1>
+  <p>30+ Free Mobile Games</p>
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button class="f on" onclick="fc('all',this)">All</button>
+  <button class="f" onclick="fc('running',this)">Running</button>
+  <button class="f" onclick="fc('sports',this)">Sports</button>
+  <button class="f" onclick="fc('puzzle',this)">Puzzle</button>
+  <button class="f" onclick="fc('action',this)">Action</button>
+  <button class="f" onclick="fc('strategy',this)">Strategy</button>
+  <button class="f" onclick="fc('casual',this)">Casual</button>
+</div>
+
+<div style="padding:0 16px 40px;">
+  <div class="sec">
+    <h2>All Games</h2>
+    <span id="cnt">30 games</span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="pb"></div>
+</div>
+
+<!-- SHEET -->
+<div class="ov" id="ov" onclick="maybeClose(event)">
+  <div class="sheet" id="sheet">
+    <div class="handle"></div>
+    <img class="sh-hero" id="sHero" src="" alt="">
+    <div class="neon-line"></div>
+    <div class="sh-body">
+      <div class="sh-top">
+        <img class="sh-ico" id="sIco" src="" alt="">
+        <div class="sh-info">
+          <h2 id="sTitle"></h2>
+          <div class="sh-meta">
+            <span class="meta" id="sGenre"></span>
+            <span class="meta r" id="sRating"></span>
+            <span class="meta" id="sDl"></span>
+          </div>
         </div>
-        <div class="platform" onclick="platformClick(this,'android')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg">
-            Android
-        </div>
+      </div>
+      <p class="sh-desc" id="sDesc"></p>
+      <div class="feat-title">Features</div>
+      <div class="feats" id="sFeats"></div>
+      <button class="dl-btn" id="dlBtn">⬇ Download Free</button>
+      <button class="cl-btn" onclick="closeSheet()">Close</button>
     </div>
-
-    <div class="try">🎁 Try your luck and win Robux</div>
-
-    <select id="amount">
-        <option value="">Select Robux Amount</option>
-        <option>400 Robux</option>
-        <option>800 Robux</option>
-        <option>1700 Robux</option>
-        <option>4500 Robux</option>
-    </select>
-
-    <input type="text" id="userid" placeholder="Enter your Roblox User ID">
-
-    <button onclick="goLocker()">Verify & Continue</button>
-
-    <div class="trust">
-        🔒 • No password required<br>
-    
-    </div>
-
-    <div class="captcha">
-        🛡️ Human verification required – complete one quick task.
-    </div>
-
-    <div class="live" id="liveBox">
-        🔴 <span>Emma</span> won <span>800 Robux</span>
-    </div>
-
+  </div>
 </div>
 
 <script>
-let platformState={};
-
-function platformClick(el,type){
-    if(!platformState[type]){
-        platformState[type]=true;
-        el.classList.add("active");
-
-        setTimeout(()=>{
-            el.classList.remove("active");
-            platformState[type]=false;
-        },2000);
-    }else{
-        if(type==="ios"){
-            window.open("https://apps.apple.com/app/roblox/id431946152","_blank");
-        }else{
-            window.open("https://play.google.com/store/apps/details?id=com.roblox.client","_blank");
-        }
+/* ══ PARTICLE BG ══ */
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;init();}
+function init(){
+  pts=[];
+  const n=Math.floor((W*H)/14000);
+  for(let i=0;i<n;i++)pts.push({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,
+    r:Math.random()*1.2+.3,
+    c:['rgba(255,45,85','rgba(0,200,255','rgba(191,95,255'][Math.floor(Math.random()*3)]
+  });
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.c+',0.6)';ctx.fill();
+  });
+  pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{
+    const d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<90){
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle=`rgba(0,200,255,${(1-d/90)*.04})`;
+      ctx.lineWidth=.5;ctx.stroke();
     }
+  }));
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);
+resize();draw();
+
+/* ══ GAMES DATA ══ */
+const G=[
+  /* RUNNING */
+  {id:1,cat:'running',genre:'Runner',name:'Subway Surfers',r:'4.5',dl:'500M+',
+   desc:'Dash through subway tracks, dodge trains, and collect coins in the world\'s most downloaded mobile game.',
+   f:['Multiple characters','Weekly maps','Daily missions','Leaderboard'],
+   icon:'https://play-lh.googleusercontent.com/EVab-I9vqpuG-7rMHi9jGvvt7mFa3EybkRxfYbsxJA_k7tGPZxkTB_6FHvmNW2JqvqE=s180',
+   hero:'https://play-lh.googleusercontent.com/haABJ5NyoS6jHFWOsMqG0bTXpEpCL_JBLMrJkPO0NWM_1a3Mz_hS4BTtTKKBVfE7FA=w600',
+   url:'https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf'},
+  {id:2,cat:'running',genre:'Runner',name:'Temple Run 2',r:'4.3',dl:'500M+',
+   desc:'Escape a demon monkey across temples, sky-high cliffs, and frozen tundras.',
+   f:['Vast environments','Special powers','Daily objectives','Characters'],
+   icon:'https://play-lh.googleusercontent.com/pkEVPUaCnEj8hLnQI2TsfjRuqmHCYjViWIiMdN_wMOFq4N-GN_N8N9XsFALmkTFCIg=s180',
+   hero:'https://play-lh.googleusercontent.com/K9hs5u9gGCJmvYhf6kF-nTkKqiDDtGXNr3Q0NMH8hEHhqolp5FPGXMoQTEUKf6QbwQ=w600',
+   url:'https://play.google.com/store/apps/details?id=com.imangi.templerun2'},
+  {id:3,cat:'running',genre:'Racing',name:'Hill Climb Racing',r:'4.4',dl:'500M+',
+   desc:'Drive through insane terrain without flipping over. Addictive physics and wild tracks.',
+   f:['20+ vehicles','Unique tracks','Deep upgrades','Adventure mode'],
+   icon:'https://play-lh.googleusercontent.com/4NywBpjCSTZK2x0Nq-kTVLRXJ6AMYWIhcC1dGnMFVOSz8FiHb9SMl6vbvnKBLa6l8Q=s180',
+   hero:'https://play-lh.googleusercontent.com/NKCN-sFsO3g5Xz_BqHJmqJHON4cg4wjNBmgKZuECRKkBZVZtjcRtJEcfuVxu3dGg2A=w600',
+   url:'https://play.google.com/store/apps/details?id=com.fingersoft.hillclimb'},
+  {id:4,cat:'running',genre:'Runner',name:'Jetpack Joyride',r:'4.2',dl:'100M+',
+   desc:'Steal a jetpack and blast through a secret lab. Dodge missiles and electric fields.',
+   f:['100+ challenges','Vehicles','Upgrades','Daily rewards'],
+   icon:'https://play-lh.googleusercontent.com/OvKOXALFOV6k3SGXG7iFsGPIFaHdkFgjIh7RR_gGBvXbnC6JJlq3Fm8cpLt9oIHV-Q=s180',
+   hero:'https://play-lh.googleusercontent.com/kEKj7FZVp9c8bnQy_HBDNK4HX9BNSA4BXjhAGM6Z35GILHy_G5bOT3nI3j4YUwxk8M=w600',
+   url:'https://play.google.com/store/apps/details?id=com.halfbrick.jetpackjoyride'},
+  {id:5,cat:'running',genre:'Racing',name:'Mini Racing Adventures',r:'4.1',dl:'10M+',
+   desc:'Side-scrolling races through fantasy worlds with upgradable vehicles.',
+   f:['50+ tracks','Vehicle collection','Upgrade system','Fantasy worlds'],
+   icon:'https://play-lh.googleusercontent.com/d2VaMJBdlMnUYVPZDioLkCDu5V3hB6kzKdEHI8gzFrRKqfUBBBVxKQlGWJFUNQp56A=s180',
+   hero:'https://picsum.photos/seed/race/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.buildagame.minicars'},
+
+  /* SPORTS */
+  {id:6,cat:'sports',genre:'Baseball',name:'Baseball 9',r:'4.6',dl:'50M+',
+   desc:'Build your dream squad and compete in global leagues. Deep team management meets arcade baseball.',
+   f:['Roster control','Player customization','PvP matches','Season mode'],
+   icon:'https://play-lh.googleusercontent.com/2mL-sLV53NQUalH-4Fy_XBqTD8nsPSA24dpDfLbj5p7hN2-0Kia0hJDwbZB7Qlra3g=s180',
+   hero:'https://play-lh.googleusercontent.com/dLZ_rDvkEKg5FtQkFPq9uJA6l8OC0uyxbopN3u7-bwfJ0_kJVMCH2WbNJsWuS2Bfxw=w600',
+   url:'https://play.google.com/store/apps/details?id=com.playus.baseball9'},
+  {id:7,cat:'sports',genre:'Billiards',name:'8 Ball Pool',r:'4.5',dl:'500M+',
+   desc:"World's #1 pool game. Challenge friends or compete in international tournaments.",
+   f:['Live PvP','Tournaments','Rare cue sticks','Leaderboard'],
+   icon:'https://play-lh.googleusercontent.com/n0_SnGBkp9nwOUK0s_SHaABfXg0k3HqTkwYT0WN7XFhg_Fzb_lFMi8FfYtYb0lJTgQ=s180',
+   hero:'https://play-lh.googleusercontent.com/Q5SjqKcYSz1Bt1t6lRa0gX0QlVlJJM5wGn7gGJi-N29OAmB2bBhKMF5N-f9mQ8h5bg=w600',
+   url:'https://play.google.com/store/apps/details?id=com.miniclip.eightballpool'},
+  {id:8,cat:'sports',genre:'Football',name:'Dream League Soccer',r:'4.4',dl:'100M+',
+   desc:'Build your ultimate squad and dominate live leagues with real player names.',
+   f:['200+ real players','Own stadium','Online league','Seasonal updates'],
+   icon:'https://play-lh.googleusercontent.com/Ic_5K95yVLCmSr0JWoL_IlTI0aR7_bAz7RR4qzwx7OGHaQ8FfuBtWEOKj5Fp-Pq4Cw=s180',
+   hero:'https://play-lh.googleusercontent.com/KPPLwHNQa8kKFNSmcqMqrBKj6d3-o0WHi3PAbj0RYf-FZV72HrJr0Qbj8SBsuvP4M4w=w600',
+   url:'https://play.google.com/store/apps/details?id=com.firsttouchgames.dls3'},
+  {id:9,cat:'sports',genre:'Fishing',name:'Fishing Clash',r:'4.4',dl:'50M+',
+   desc:'Hunt rare fish across 100+ global locations in competitive live tournaments.',
+   f:['500+ fish species','100+ locations','Live tournaments','Gear upgrades'],
+   icon:'https://play-lh.googleusercontent.com/N5cJ3ikmw2oQI1JLv0PZFlPqPz3QU34bUFkWB2AGZn_RkS0e5H9HMYi3dv11hT7ueA=s180',
+   hero:'https://play-lh.googleusercontent.com/IZMLi0lZ2mVvl8p5f1cCt1d2DwZN-3YLXSYQSH_HxQ_JRxHZtAD_6qVJTVYH3cVrPg=w600',
+   url:'https://play.google.com/store/apps/details?id=pl.tensquaregames.letsfish'},
+  {id:10,cat:'sports',genre:'Bowling',name:'Bowling Club',r:'4.2',dl:'10M+',
+   desc:'Realistic bowling physics. Compete live against players worldwide.',
+   f:['Live PvP','Real physics','Premium balls','Tournaments'],
+   icon:'https://play-lh.googleusercontent.com/rBBZOqMYpFTJ0TFxinGRyMKlTT8pqzAhpNBkO0mZ2_uP6YEpGZkHjqX8P83s4pP36Q=s180',
+   hero:'https://picsum.photos/seed/bowling/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.game.bowling.club'},
+  {id:11,cat:'sports',genre:'Mini Football',name:'Soccer Stars',r:'4.1',dl:'50M+',
+   desc:'Top-down football with simple tap controls. Score goals in fast online matches.',
+   f:['Instant PvP','Daily cups','Star players','Quick matches'],
+   icon:'https://play-lh.googleusercontent.com/R0UZhOgI4PGCq7wm4xT3KkgV2D1PrpHNI0gLKJzUcqFyxFRuM8vLJJXiFOV_fJXeJQ=s180',
+   hero:'https://picsum.photos/seed/soccer/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.miniclip.soccerstars'},
+
+  /* PUZZLE */
+  {id:12,cat:'puzzle',genre:'Match-3',name:'Candy Crush Saga',r:'4.4',dl:'1B+',
+   desc:'Match colorful candies in thousands of levels that get deliciously tricky.',
+   f:['7000+ levels','Social sharing','Daily rewards','Tournaments'],
+   icon:'https://play-lh.googleusercontent.com/y9FJRMn9i2p5CeKbajCLqRS-7ys_q1rOj5z1K6c7c3i8b_sGZtGqP4K_eH3-Q3DVKA=s180',
+   hero:'https://play-lh.googleusercontent.com/oEuPoqLAa7pCJb_FH_LElN4HdBnK26W4S6ckZ_7X55AhRlL0SDLP9n0H0J_WwbTKCg=w600',
+   url:'https://play.google.com/store/apps/details?id=com.king.candycrushsaga'},
+  {id:13,cat:'puzzle',genre:'Physics Puzzle',name:'Angry Birds',r:'4.3',dl:'1B+',
+   desc:'Launch birds at pig fortresses. The game that started it all — 500+ levels.',
+   f:['500+ levels','Unique birds','Real physics','Regular updates'],
+   icon:'https://play-lh.googleusercontent.com/mmt9jNHgLqZKO3mAdpn66_UKZ5KXJbR4MFBf9Rb3INm_6u7c0VNTM_hcVQcYMv4CmXA=s180',
+   hero:'https://play-lh.googleusercontent.com/ixvfY-Kqb1s1QCU0Fj15NMxNvqCEMbsPYiGfnl1EW-xGqixL_ycSz-hFhNTDPvn9Jk=w600',
+   url:'https://play.google.com/store/apps/details?id=com.rovio.angrybirdsfriends'},
+  {id:14,cat:'puzzle',genre:'Virtual Pet',name:'My Talking Tom',r:'4.4',dl:'1B+',
+   desc:'Adopt Tom, feed him, and watch him grow. Enjoyed by over a billion players.',
+   f:['Full customization','Mini-games','Growth stages','Voice interaction'],
+   icon:'https://play-lh.googleusercontent.com/t-juVwXA_lKgSRDeHFJRHpMEfM3mIwSWNaOoL1u3UG_RJvkfTbcHq1Eq6LfT7Zs4Fw=s180',
+   hero:'https://play-lh.googleusercontent.com/gbD19lAGd9BfRZBiw_9K3VGbmJpobdFpTolE-JQDHjFO6pJeEUMFUJEWj-oKEXr0K7E=w600',
+   url:'https://play.google.com/store/apps/details?id=com.outfit7.mytalkingtom'},
+  {id:15,cat:'puzzle',genre:'Board Game',name:'Ludo King',r:'4.3',dl:'500M+',
+   desc:'The classic board game reimagined. Play with up to 6 friends online or offline.',
+   f:['Up to 6 players','Online & offline','Multiple themes','Voice chat'],
+   icon:'https://play-lh.googleusercontent.com/8Vk2kBzqjYT1o5PJaAl5EJ7gLp1GJwH5Mw7TJIv4YQAY3X8H1JXf8FEh_f1IiM7YNXB=s180',
+   hero:'https://picsum.photos/seed/ludo/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.ludo.king'},
+  {id:16,cat:'puzzle',genre:'Word',name:'Wordle',r:'4.5',dl:'10M+',
+   desc:'Guess the 5-letter word in 6 tries. The addictive daily word puzzle everyone loves.',
+   f:['Daily puzzles','Share results','Color hints','Simple & deep'],
+   icon:'https://play-lh.googleusercontent.com/kRt4Zu3ReMXBEAFYS3MvFcBMDGPgBFdE9qDFU0m2vr8qjy_qJN0dSA9cHHBFg8qhsw=s180',
+   hero:'https://picsum.photos/seed/word/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.nytimes.wordle'},
+  {id:17,cat:'puzzle',genre:'2048',name:'2048',r:'4.4',dl:'50M+',
+   desc:'Slide tiles and combine numbers to reach 2048. Simple rules, endless depth.',
+   f:['Infinite play','Undo moves','Color themes','Score tracking'],
+   icon:'https://play-lh.googleusercontent.com/ecHQfMFDd6R_OBqFXjSqg-KAiPb0VTVSGzqGHlxfTuLi9NF-VjJW2eGPdnQzgKH1pQ=s180',
+   hero:'https://picsum.photos/seed/2048/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.gabrielecirulli.app2048'},
+
+  /* ACTION */
+  {id:18,cat:'action',genre:'Battle Royale',name:'Stumble Guys',r:'4.3',dl:'100M+',
+   desc:'60 players in chaotic party arenas. Stumble, dodge, and be the last one standing.',
+   f:['60-player PvP','Exclusive skins','Rotating maps','Seasonal events'],
+   icon:'https://play-lh.googleusercontent.com/V0bKj3HMGKiH8LCpUYWxjJjNrXIhSaL7sxWdp9K8NkpHhc5EuMSi9BN2C6CtEFzxJQ=s180',
+   hero:'https://play-lh.googleusercontent.com/NAvVoNGkDpNKV4-5y6gKFMm8DU3J0XDR0G9V5m1-n0MuaqFDrgVs-e3Hq9yJ0b4oPg=w600',
+   url:'https://play.google.com/store/apps/details?id=com.scopely.stumbleguys'},
+  {id:19,cat:'action',genre:'Arcade',name:'Fruit Ninja',r:'4.1',dl:'500M+',
+   desc:'Slice fruit flying through the air and dodge bombs. The iconic swipe-to-slash classic.',
+   f:['3 game modes','Special blades','Tournaments','Precision stats'],
+   icon:'https://play-lh.googleusercontent.com/zp8VLI8OWklpNqIFyVBFfxGHfOECFq3-N4jJ2CDjumDRwWGXCNwzpL7mjEYMN-R-QA=s180',
+   hero:'https://play-lh.googleusercontent.com/M7CUZ7WY2MFkj1Q-bkNJMCz8Wz8OY6hV67fhZr0taMkPRlcPXk1DG7m5HV6pPNvNw=w600',
+   url:'https://play.google.com/store/apps/details?id=com.halfbrick.fruitninjafree'},
+  {id:20,cat:'action',genre:'Multiplayer',name:'Mini Militia',r:'4.3',dl:'50M+',
+   desc:'2D combat with up to 6 online players. Grab weapons and outlast everyone.',
+   f:['6-player online','Weapon variety','Multiple maps','Customization'],
+   icon:'https://play-lh.googleusercontent.com/aSVg7YGPZmGqRbr2gO-4JIv9wsCqFiUQHB6Y5F4IpbQJJ7o_QL9sTNEWBNlMTN01IpU=s180',
+   hero:'https://picsum.photos/seed/militia/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.appsomniacs.da2'},
+  {id:21,cat:'action',genre:'Social Deduction',name:'Among Us',r:'4.0',dl:'100M+',
+   desc:'Crew vs. Impostors in space. Discuss, deceive, vote — trust absolutely no one.',
+   f:['Up to 15 players','Multiple maps','Varied roles','Custom modes'],
+   icon:'https://play-lh.googleusercontent.com/6Dd4s8wBk0RQ3Ie4rblHQF16B0j8GPO0fOIqLbXT-HY2h9pZlBKMhbnmSp_ZqTwrVA=s180',
+   hero:'https://picsum.photos/seed/among/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.innersloth.spacemafia'},
+  {id:22,cat:'action',genre:'Shooter',name:'Guns of Boom',r:'4.3',dl:'50M+',
+   desc:'Fast-paced online tactical shooter. 4v4 battles with team coordination and spectacular gunplay.',
+   f:['4v4 online','50+ weapons','Ranked matches','Regular events'],
+   icon:'https://play-lh.googleusercontent.com/W8lgGPD9EXh4LwKY6O5r3U5gN8_kWKxrCnTXi36BjLVJlXQ8kAaHVxbpvL6S4XBp0Q=s180',
+   hero:'https://picsum.photos/seed/guns/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.gameinsight.goboom'},
+  {id:23,cat:'action',genre:'Survival',name:'Last Day on Earth',r:'4.3',dl:'50M+',
+   desc:'Survive the zombie apocalypse. Craft, build, and fight to stay alive in a world overrun.',
+   f:['Open world','Crafting system','Base building','Co-op raids'],
+   icon:'https://play-lh.googleusercontent.com/lEPYh0dSqTLrSsH9fwQPXZ_8SLV4F0L3HBGD_DkQ4MUqzJpVZW9rH-VPP7Pl6P1oA=s180',
+   hero:'https://picsum.photos/seed/zombie/600/300',
+   url:'https://play.google.com/store/apps/details?id=zombie.survival.craft.z'},
+
+  /* STRATEGY */
+  {id:24,cat:'strategy',genre:'Strategy',name:'Clash of Clans',r:'4.6',dl:'500M+',
+   desc:'Build your village, train troops, and raid other clans. Millions play daily.',
+   f:['Base building','Clan wars','Regular events','Continuous updates'],
+   icon:'https://play-lh.googleusercontent.com/jBqXEOx6m6NmFSvZtfE_2v39T4gjmSjg01W-_0B3Lm8ub21hmSh_FDgY4WbkS6m4gQ=s180',
+   hero:'https://play-lh.googleusercontent.com/mHH9t3KdC-e_1Onh_rU_Kfv8O7f5gPJ_Xw9FuNS-dEqLbSPNWKz5bGpIbmZCwnrL8I=w600',
+   url:'https://play.google.com/store/apps/details?id=com.supercell.clashofclans'},
+  {id:25,cat:'strategy',genre:'Tower Defense',name:'Bloons TD 6',r:'4.8',dl:'50M+',
+   desc:'Pop balloons with monkey towers in the best tower defense game ever made. Deep strategy, endless fun.',
+   f:['50+ maps','100+ upgrades','Monkey heroes','Co-op mode'],
+   icon:'https://play-lh.googleusercontent.com/qPCuXHSdNMqNBKarHOCH7wJ9G6KAJHfHfFHZtQWmBCyHd7bwUbU9ABKJD0bOQjZr_Jk=s180',
+   hero:'https://picsum.photos/seed/bloons/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.ninjakiwi.bloonstd6'},
+  {id:26,cat:'strategy',genre:'Card Strategy',name:'Clash Royale',r:'4.3',dl:'500M+',
+   desc:'Collect and upgrade cards, build your deck, and destroy the enemy king\'s tower.',
+   f:['Real-time 1v1','100+ cards','Clan battles','Seasonal rewards'],
+   icon:'https://play-lh.googleusercontent.com/A9QYwXDo8EhwIPEg7T5u_cJFMRIfgvMVnWiMVDVFSbMKGsGNOD7-ZJUJzFCmkh7K7A=s180',
+   hero:'https://picsum.photos/seed/royale/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.supercell.clashroyale'},
+  {id:27,cat:'strategy',genre:'RPG Strategy',name:'AFK Arena',r:'4.4',dl:'10M+',
+   desc:'Build a team of heroes and watch them battle. Perfect for players who want depth without grind.',
+   f:['100+ heroes','Guild battles','Story campaign','Auto-battle'],
+   icon:'https://play-lh.googleusercontent.com/cV-IUVflQV5fBW6nFw_CRnGf1AYMjDGGCR0X5J3KZZHj7cxYQfJV2aSAb_kKCc1y_Q=s180',
+   hero:'https://picsum.photos/seed/afkarena/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.lilithgames.hgame.gp'},
+  {id:28,cat:'strategy',genre:'City Builder',name:'Forge of Empires',r:'4.3',dl:'10M+',
+   desc:'Build and evolve your city from the Stone Age into the future. Trade, research, and conquer.',
+   f:['10,000+ years of history','Guild vs Guild','Seasonal events','Build & research'],
+   icon:'https://play-lh.googleusercontent.com/5y7z2tBJkJJvVVYP3sV7zDFp6vBgL3sLWtnB6oHMx4XXDH3JuA_I0F87b8oMZwXIiA=s180',
+   hero:'https://picsum.photos/seed/forge/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.innogames.forgeofempires'},
+
+  /* CASUAL */
+  {id:29,cat:'casual',genre:'Casual',name:'Stack Ball',r:'4.2',dl:'100M+',
+   desc:'Smash through platforms by bouncing a ball down a winding spiral tower. Addictively simple.',
+   f:['Infinite levels','Color themes','Power-ups','Offline play'],
+   icon:'https://play-lh.googleusercontent.com/kE-IoxpAKlGwOkECi_T8pCHpHkSwGEMJY_GODHXq5bqBlxhSiSjPlP7V1F3Fo4Hwu1A=s180',
+   hero:'https://picsum.photos/seed/stackball/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.Huuuge.StackBall3D'},
+  {id:30,cat:'casual',genre:'Idle',name:'Merge Mansion',r:'4.4',dl:'10M+',
+   desc:'Merge items to renovate grandma\'s mysterious mansion. Unravel secrets as you clean up.',
+   f:['Rich storyline','Merge mechanics','Seasonal events','Mystery elements'],
+   icon:'https://play-lh.googleusercontent.com/bOyoVchP-iRiHBbJPPF7i8GHQT2v9_GUPnNzjmGd6b1c7nXP8n0aIIrxV_BV_mQWEg=s180',
+   hero:'https://picsum.photos/seed/mansion/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.metacore.mergemansion'},
+  {id:31,cat:'casual',genre:'Hypercasual',name:'Helix Jump',r:'4.1',dl:'500M+',
+   desc:'Guide a bouncing ball through a helix tower maze. Deceptively simple, devastatingly addictive.',
+   f:['Infinite play','Smooth controls','Color ball skins','Challenging gaps'],
+   icon:'https://play-lh.googleusercontent.com/UO13eTbLs2VkB3kE_56Lxx3rjSJNj0RRMX9iJBDmFX4b7OhvpJz1T5n-q0Hn3Mv3g=s180',
+   hero:'https://picsum.photos/seed/helix/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.voodoo.helixjump'},
+  {id:32,cat:'casual',genre:'Idle',name:'Idle Miner Tycoon',r:'4.5',dl:'50M+',
+   desc:'Build a mining empire from a single shaft to a global operation. Tap, upgrade, and automate.',
+   f:['Idle mechanics','Multiple continents','Manager system','Seasonal mines'],
+   icon:'https://play-lh.googleusercontent.com/M1lQ1-c3jKSXjZkuQ8bHF3LL0XE9uXlm5RBqL4L5JI5v5pSo_Nf7KZJGZ2o-OD0=s180',
+   hero:'https://picsum.photos/seed/miner/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.kolibri.minecorp'},
+  {id:33,cat:'casual',genre:'Simulation',name:'My Talking Angela',r:'4.4',dl:'500M+',
+   desc:'Style your own virtual cat Angela and take her on adventures. Fashion, fun, and mini-games.',
+   f:['Fashion system','World tour','Mini-games','Cute animations'],
+   icon:'https://play-lh.googleusercontent.com/CsH6HJMF0IVWF_TqMB-8GZ95xZABvUMK12m4eTiXvCMUXAQjQh5yC-uajsIbWx_Q3g=s180',
+   hero:'https://picsum.photos/seed/angela/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.outfit7.mytalkingangelafree'},
+  {id:34,cat:'casual',genre:'Hypercasual',name:'Knife Hit',r:'4.2',dl:'50M+',
+   desc:'Throw knives at a spinning log and aim for the apple. One-tap precision at its finest.',
+   f:['100+ stages','Boss battles','Special knives','Precise physics'],
+   icon:'https://play-lh.googleusercontent.com/wMxMEHDR_y4cHbBQ01tC9b7RDKQBT0LXKJUA0A6LqT8HCmkrz6xvGGlOb5_MrWd8JoA=s180',
+   hero:'https://picsum.photos/seed/knife/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.ketchapp.knifehit'},
+  {id:35,cat:'casual',genre:'Simulation',name:'Stardew Valley',r:'4.9',dl:'1M+',
+   desc:'Farm, fish, mine, and befriend villagers in the most beloved indie game ever made for mobile.',
+   f:['Open-ended gameplay','Farming & mining','Relationships','Multiplayer coop'],
+   icon:'https://play-lh.googleusercontent.com/BaYGHMd_QvJoxkiEHb7LqPv-kFEiawkF7mC8LF1qmn7aMBbHQfuGrv-aAhLyV8PFKB4=s180',
+   hero:'https://picsum.photos/seed/stardew/600/300',
+   url:'https://play.google.com/store/apps/details?id=com.chucklefish.stardewvalley'},
+];
+
+let cat='all', active=null;
+
+function render(){
+  const q=document.getElementById('q').value.toLowerCase();
+  const list=G.filter(g=>
+    (cat==='all'||g.cat===cat)&&
+    (g.name.toLowerCase().includes(q)||g.genre.toLowerCase().includes(q))
+  );
+  document.getElementById('cnt').textContent=list.length+' game'+(list.length!==1?'s':'');
+  const grid=document.getElementById('grid');
+  if(!list.length){
+    grid.innerHTML=`<div class="empty">No results for "${q}"</div>`;return;
+  }
+  grid.innerHTML=list.map((g,i)=>`
+    <div class="card" style="animation:fadeUp .4s ${i*.03}s both" onclick="openSheet(${g.id})">
+      <div class="img-wrap">
+        <img class="card-img" src="${g.icon}" alt="${g.name}"
+          onerror="this.src='https://picsum.photos/seed/${g.id}/200/200'">
+        <span class="genre-tag">${g.genre}</span>
+      </div>
+      <div class="card-body">
+        <h3>${g.name}</h3>
+        <div class="sub">${g.dl} downloads</div>
+        <div class="card-footer">
+          <span class="star">★ ${g.r}</span>
+          <span class="get-pill">Get</span>
+        </div>
+      </div>
+    </div>`).join('');
 }
 
-function goLocker(){
-    const id=document.getElementById("userid").value.trim();
-    const amount=document.getElementById("amount").value;
-    if(!id||!amount){
-        alert("Please select Robux amount and enter your User ID");
-        return;
-    }
-    // 🔴 PUT YOUR OGADS CONTENT LOCKER LINK HERE
-    window.location.href="https://lockedapp.org/cl/i/exxmmd";
+function fc(c,btn){
+  cat=c;
+  document.querySelectorAll('.f').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');render();
 }
 
-/* Fake Live */
-const names=["Alex","Emma","Noah","Lucas","Leo","Sarah","Daniel","Mia"];
-const robux=["400","800","1700","4500"];
-setInterval(()=>{
-    const n=names[Math.floor(Math.random()*names.length)];
-    const r=robux[Math.floor(Math.random()*robux.length)];
-    document.getElementById("liveBox").innerHTML=
-        `🔴 <span>${n}</span> won <span>${r} Robux</span>`;
-},5000);
+function toggleSearch(){
+  const sw=document.getElementById('sw');
+  sw.classList.toggle('show');
+  if(sw.classList.contains('show'))document.getElementById('q').focus();
+  else{document.getElementById('q').value='';render();}
+}
+
+function openSheet(id){
+  const g=G.find(x=>x.id===id);active=g;
+  document.getElementById('sHero').src=g.hero;
+  document.getElementById('sHero').onerror=function(){this.src=g.icon;};
+  document.getElementById('sIco').src=g.icon;
+  document.getElementById('sTitle').textContent=g.name;
+  document.getElementById('sGenre').textContent=g.genre;
+  document.getElementById('sRating').textContent='★ '+g.r;
+  document.getElementById('sDl').textContent=g.dl+' downloads';
+  document.getElementById('sDesc').textContent=g.desc;
+  document.getElementById('sFeats').innerHTML=g.f.map(f=>
+    `<div class="feat">${f}</div>`).join('');
+  document.getElementById('ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeSheet(){
+  document.getElementById('ov').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function maybeClose(e){
+  if(e.target===document.getElementById('ov'))closeSheet();
+}
+
+document.getElementById('dlBtn').onclick=()=>{
+  if(active)window.open(active.url,'_blank');
+};
+
+/* card fadeUp keyframe */
+const st=document.createElement('style');
+st.textContent='@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}';
+document.head.appendChild(st);
+
+render();
 </script>
-
 </body>
 </html>
